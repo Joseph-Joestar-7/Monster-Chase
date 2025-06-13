@@ -23,6 +23,9 @@ public class Player : MonoBehaviour
     private string GROUND_TAG = "Ground";
     private string ENEMY_TAG = "Enemy";
 
+    private string APPLE_TAG = "Apple";
+    private string COIN_TAG = "Coin";
+
     private bool isGrounded;
     private bool isPhasing=false;
     private void Awake()
@@ -94,6 +97,27 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void ActivatePhasing(float duration)
+    {
+        if (isPhasing) return;
+        isPhasing = true;
+        Debug.Log("Activated");
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),
+                                       LayerMask.NameToLayer("Enemy"),
+                                       true);
+        StartCoroutine(DisablePhasingAfter(duration));
+    }
+
+    private IEnumerator DisablePhasingAfter(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),
+                                       LayerMask.NameToLayer("Enemy"),
+                                       false);
+        isPhasing = false;
+        Debug.Log("Deactivated");
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.CompareTag(GROUND_TAG))
@@ -103,8 +127,8 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.CompareTag(ENEMY_TAG))
         {
-            //Destroy(gameObject);
-            //SceneManager.LoadScene("GameOver");
+            Destroy(gameObject);
+            SceneManager.LoadScene("GameOver");
         }
     }
 
@@ -112,8 +136,19 @@ public class Player : MonoBehaviour
     {
         if (collision.CompareTag(ENEMY_TAG))
         {
-            //Destroy(gameObject);
-            //SceneManager.LoadScene("GameOver");
+            Destroy(gameObject);
+            SceneManager.LoadScene("GameOver");
+        }
+
+        if(collision.CompareTag(APPLE_TAG))
+        {
+            Destroy(collision.gameObject);
+            ActivatePhasing(5f);
+        }
+
+        if (collision.CompareTag(COIN_TAG))
+        {
+            Destroy(collision.gameObject);
         }
     }
 }
