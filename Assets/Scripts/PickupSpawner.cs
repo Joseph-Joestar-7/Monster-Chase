@@ -24,11 +24,6 @@ public class PickupSpawner : MonoBehaviour
             randomIndex = Random.Range(0,pickupRef.Length);
             randomSpawnIndex = Random.Range(0,spawnLoc.Length);
 
-            //spawnedPickup = Instantiate(
-            //    pickupRef[randomIndex],
-            //    spawnLoc[randomSpawnIndex].position,
-            //    Quaternion.identity
-            //);
             if(spawnLoc[randomSpawnIndex].childCount ==0)
             {
                 spawnedPickup = Instantiate(pickupRef[randomIndex], spawnLoc[randomSpawnIndex]);
