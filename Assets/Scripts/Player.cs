@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float jumpForce = 11f;
 
+    private int m_Score = 0;
+
     private float movementX;
 
     private Rigidbody2D myBody;
@@ -22,13 +24,13 @@ public class Player : MonoBehaviour
     private string WALK_ANIMATION = "Walk";
     private string GROUND_TAG = "Ground";
     private string ENEMY_TAG = "Enemy";
-
     private string APPLE_TAG = "Apple";
     private string COIN_TAG = "Coin";
 
     private bool isGrounded;
     private bool isPhasing=false;
     private Coroutine ghostCoroutine;
+
     private void Awake()
     {
         myBody = GetComponent<Rigidbody2D>();
@@ -41,7 +43,8 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-    
+        PlayerPrefs.SetInt("FinalScore", m_Score);
+        PlayerPrefs.Save();
     }
 
     // Update is called once per frame
@@ -50,11 +53,6 @@ public class Player : MonoBehaviour
         PlayerMoveKeyboard();
         PlayerJump();
         AnimatePlayer();
-    }
-
-    private void FixedUpdate()
-    {
-       
     }
 
     void PlayerMoveKeyboard()
@@ -147,6 +145,8 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.CompareTag(ENEMY_TAG))
         {
+            PlayerPrefs.SetInt("FinalScore", m_Score);
+            PlayerPrefs.Save();
             Destroy(gameObject);
             SceneManager.LoadScene("GameOver");
         }
@@ -156,6 +156,8 @@ public class Player : MonoBehaviour
     {
         if (collision.CompareTag(ENEMY_TAG))
         {
+            PlayerPrefs.SetInt("FinalScore", m_Score);
+            PlayerPrefs.Save();
             Destroy(gameObject);
             SceneManager.LoadScene("GameOver");
         }
@@ -168,6 +170,7 @@ public class Player : MonoBehaviour
 
         if (collision.CompareTag(COIN_TAG))
         {
+            m_Score += 1;
             Destroy(collision.gameObject);
         }
     }
