@@ -42,8 +42,7 @@ public class SoundManager : MonoBehaviour
     }
     private void PlayMusicForCurrentScene()
     {
-        if (SceneManager.GetActiveScene().name == "MainMenu" ||
-            SceneManager.GetActiveScene().name == "GameOver")
+        if (SceneManager.GetActiveScene().name == "MainMenu" || SceneManager.GetActiveScene().name == "GameOver")
         {
             backgroundSource.clip = mainMenuClip;
         }
@@ -51,7 +50,7 @@ public class SoundManager : MonoBehaviour
         {
             backgroundSource.clip = gameplayClip;
         }
-
+        backgroundSource.volume = 0.2f;
         backgroundSource.Play();
     }
 }
