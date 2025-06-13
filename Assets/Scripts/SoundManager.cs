@@ -42,15 +42,25 @@ public class SoundManager : MonoBehaviour
     }
     private void PlayMusicForCurrentScene()
     {
-        if (SceneManager.GetActiveScene().name == "MainMenu" || SceneManager.GetActiveScene().name == "GameOver")
+        AudioClip newClip = null;
+
+        if (SceneManager.GetActiveScene().name == "MainMenu" ||
+            SceneManager.GetActiveScene().name == "GameOver")
         {
-            backgroundSource.clip = mainMenuClip;
+            newClip = mainMenuClip;
         }
         else if (SceneManager.GetActiveScene().name == "Gameplay")
         {
-            backgroundSource.clip = gameplayClip;
+            newClip = gameplayClip;
         }
-        backgroundSource.volume = 0.2f;
+        // If it's the same clip, do nothing
+        if (backgroundSource.clip == newClip && backgroundSource.isPlaying)
+        {
+            // Already playing this track
+            return;
+        }
+        // Otherwise, restart with new
+        backgroundSource.clip = newClip;
         backgroundSource.Play();
     }
 }
