@@ -29,9 +29,6 @@ public class PickupSpawner : MonoBehaviour
                 spawnedPickup = Instantiate(pickupRef[randomIndex], spawnLoc[randomSpawnIndex]);
                 spawnedPickup.transform.SetPositionAndRotation(spawnLoc[randomSpawnIndex].position, Quaternion.identity);
             }
-            
-
-
         }
     }
 }

@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
 
     private bool isGrounded;
     private bool isPhasing=false;
+    private Coroutine ghostCoroutine;
     private void Awake()
     {
         myBody = GetComponent<Rigidbody2D>();
@@ -105,6 +106,7 @@ public class Player : MonoBehaviour
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),
                                        LayerMask.NameToLayer("Enemy"),
                                        true);
+        ghostCoroutine = StartCoroutine(GhostPulse(duration));
         StartCoroutine(DisablePhasingAfter(duration));
     }
 
@@ -116,6 +118,24 @@ public class Player : MonoBehaviour
                                        false);
         isPhasing = false;
         Debug.Log("Deactivated");
+
+        if (ghostCoroutine != null)
+        {
+            StopCoroutine(ghostCoroutine);
+        }
+    }
+
+    private IEnumerator GhostPulse(float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration && isPhasing)
+        {
+            float alpha = 0.5f + 0.5f * Mathf.PingPong(elapsed * 2f, 1f);
+            sr.color = new Color(1f, 1f, 1f, alpha);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        sr.color = new Color(1f, 1f, 1f, 1f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
