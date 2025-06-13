@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class Player : MonoBehaviour
 {
@@ -22,6 +24,7 @@ public class Player : MonoBehaviour
     private string ENEMY_TAG = "Enemy";
 
     private bool isGrounded;
+
     private void Awake()
     {
         myBody = GetComponent<Rigidbody2D>();
@@ -34,7 +37,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+    
     }
 
     // Update is called once per frame
@@ -76,6 +79,10 @@ public class Player : MonoBehaviour
         {
             anim.SetBool(WALK_ANIMATION, false);
         }
+        if (!isGrounded)
+            anim.SetBool("Jump", true);
+        else
+            anim.SetBool("Jump", false);
     }
 
     void PlayerJump()
@@ -97,6 +104,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag(ENEMY_TAG))
         {
             Destroy(gameObject);
+            SceneManager.LoadScene("GameOver");
         }
     }
 
@@ -105,6 +113,7 @@ public class Player : MonoBehaviour
         if (collision.CompareTag(ENEMY_TAG))
         {
             Destroy(gameObject);
+            SceneManager.LoadScene("GameOver");
         }
     }
 }
