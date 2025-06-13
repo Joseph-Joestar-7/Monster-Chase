@@ -53,14 +53,12 @@ public class SoundManager : MonoBehaviour
         {
             newClip = gameplayClip;
         }
-        // If it's the same clip, do nothing
         if (backgroundSource.clip == newClip && backgroundSource.isPlaying)
         {
-            // Already playing this track
             return;
         }
-        // Otherwise, restart with new
         backgroundSource.clip = newClip;
+        backgroundSource.volume = 0.5f;
         backgroundSource.Play();
     }
 }
