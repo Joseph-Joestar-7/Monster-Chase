@@ -103,8 +103,8 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.CompareTag(ENEMY_TAG))
         {
-            Destroy(gameObject);
-            SceneManager.LoadScene("GameOver");
+            //Destroy(gameObject);
+            //SceneManager.LoadScene("GameOver");
         }
     }
 
@@ -112,8 +112,8 @@ public class Player : MonoBehaviour
     {
         if (collision.CompareTag(ENEMY_TAG))
         {
-            Destroy(gameObject);
-            SceneManager.LoadScene("GameOver");
+            //Destroy(gameObject);
+            //SceneManager.LoadScene("GameOver");
         }
     }
 }

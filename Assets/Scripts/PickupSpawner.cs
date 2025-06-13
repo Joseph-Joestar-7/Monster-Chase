@@ -24,11 +24,13 @@ public class PickupSpawner : MonoBehaviour
             randomIndex = Random.Range(0,pickupRef.Length);
             randomSpawnIndex = Random.Range(0,spawnLoc.Length);
 
-            spawnedPickup = Instantiate(
-                pickupRef[randomIndex],
-                spawnLoc[randomSpawnIndex].position,
-                Quaternion.identity
-            );
+            //spawnedPickup = Instantiate(
+            //    pickupRef[randomIndex],
+            //    spawnLoc[randomSpawnIndex].position,
+            //    Quaternion.identity
+            //);
+            spawnedPickup= Instantiate(pickupRef[randomIndex], spawnLoc[randomSpawnIndex]);
+            spawnedPickup.transform.SetPositionAndRotation(spawnLoc[randomSpawnIndex].position,Quaternion.identity);
 
 
         }
