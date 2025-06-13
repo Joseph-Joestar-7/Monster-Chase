@@ -51,6 +51,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         PlayerMoveKeyboard();
+
+        Vector3 pos = transform.position;
+        pos.x = Mathf.Clamp(pos.x, -46f, 66.2f);
+        transform.position = pos;
+
         PlayerJump();
         AnimatePlayer();
     }
