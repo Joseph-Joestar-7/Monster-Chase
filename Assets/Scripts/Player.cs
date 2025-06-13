@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     private string ENEMY_TAG = "Enemy";
 
     private bool isGrounded;
-
+    private bool isPhasing=false;
     private void Awake()
     {
         myBody = GetComponent<Rigidbody2D>();
